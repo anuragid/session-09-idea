@@ -73,29 +73,17 @@ const createCustomCursor = () => {
 };
 
 // ==========================================
-// ASCII ART TYPEWRITER EFFECT
+// ASCII LOGO - NO TYPEWRITER (instant display)
 // ==========================================
-const typewriterEffect = () => {
-    const asciiElement = document.getElementById('asciiArt');
-    if (!asciiElement) return;
+const initLogo = () => {
+    const asciiLogo = document.getElementById('asciiArt');
+    if (!asciiLogo) return;
     
-    const asciiText = asciiElement.textContent;
-    asciiElement.textContent = '';
-    asciiElement.style.opacity = '1';
-    
-    let charIndex = 0;
-    const speed = 15; // milliseconds per character
-    
-    const type = () => {
-        if (charIndex < asciiText.length) {
-            asciiElement.textContent += asciiText.charAt(charIndex);
-            charIndex++;
-            setTimeout(type, speed);
-        }
-    };
-    
-    // Start typing after a short delay
-    setTimeout(type, 300);
+    // Logo appears instantly with fade-in animation from CSS
+    // Add click handler to scroll to top
+    asciiLogo.parentElement.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
 };
 
 // ==========================================
@@ -359,7 +347,7 @@ const createASCIIBackground = () => {
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
     // Core animations
-    typewriterEffect();
+    initLogo();
     cyclingTextAnimation();
     parallaxScroll();
     
