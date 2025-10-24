@@ -99,36 +99,72 @@ const typewriterEffect = () => {
 };
 
 // ==========================================
-// CYCLING TEXT ANIMATION
+// CYCLING TEXT ANIMATION WITH TYPEWRITER
 // ==========================================
 const cyclingTextAnimation = () => {
-    const cyclingElement = document.getElementById('cyclingText');
-    if (!cyclingElement) return;
+    const typewriterElement = document.getElementById('typewriterText');
+    if (!typewriterElement) return;
     
-    const statements = [
-        'Design is about connecting complexity to meaning',
-        'Design is about pushing boundaries',
-        'Design is about driving outcomes'
+    const phrases = [
+        'connecting complexity to meaning',
+        'pushing boundaries',
+        'driving outcomes'
     ];
     
-    let currentIndex = 0;
+    let currentPhraseIndex = 0;
+    let currentCharIndex = 0;
+    let isDeleting = false;
+    let isPaused = false;
     
-    const cycleText = () => {
-        const textLine = cyclingElement.querySelector('.text-line');
+    const typeSpeed = 80;  // Speed of typing
+    const deleteSpeed = 50;  // Speed of deleting
+    const pauseDuration = 2000;  // Pause at end of phrase
+    const pauseBeforeDelete = 1500;  // Pause before starting to delete
+    
+    const type = () => {
+        const currentPhrase = phrases[currentPhraseIndex];
         
-        // Fade out
-        textLine.style.animation = 'none';
-        setTimeout(() => {
-            textLine.style.animation = 'textCycle 4s ease-in-out';
-        }, 10);
+        if (isPaused) {
+            return;
+        }
         
-        // Change text
-        currentIndex = (currentIndex + 1) % statements.length;
-        textLine.textContent = statements[currentIndex];
+        if (!isDeleting) {
+            // Typing
+            typewriterElement.textContent = currentPhrase.substring(0, currentCharIndex + 1);
+            currentCharIndex++;
+            
+            if (currentCharIndex === currentPhrase.length) {
+                // Finished typing, pause before deleting
+                isPaused = true;
+                setTimeout(() => {
+                    isPaused = false;
+                    isDeleting = true;
+                    type();
+                }, pauseBeforeDelete);
+                return;
+            }
+        } else {
+            // Deleting
+            typewriterElement.textContent = currentPhrase.substring(0, currentCharIndex - 1);
+            currentCharIndex--;
+            
+            if (currentCharIndex === 0) {
+                // Finished deleting
+                isDeleting = false;
+                currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+                
+                // Small pause before typing next phrase
+                setTimeout(type, 500);
+                return;
+            }
+        }
+        
+        // Continue typing or deleting
+        setTimeout(type, isDeleting ? deleteSpeed : typeSpeed);
     };
     
-    // Start cycling after initial display
-    setInterval(cycleText, 4000);
+    // Start typing after initial display
+    type();
 };
 
 // Start the cycling text after the hero animations

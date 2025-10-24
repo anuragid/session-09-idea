@@ -164,29 +164,30 @@ strong {
     justify-content: center;
     text-transform: none;
     font-weight: 400;
+    flex-wrap: wrap;
 }
 
-.cycling-text .text-line {
+.cycling-text .text-constant {
     display: inline-block;
-    animation: textCycle 1s ease-in-out;
 }
 
-@keyframes textCycle {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    10% {
+.cycling-text .text-typewriter {
+    display: inline-block;
+    min-width: 2ch;
+}
+
+.cycling-text .cursor {
+    display: inline-block;
+    animation: blink 1s step-end infinite;
+    margin-left: 2px;
+}
+
+@keyframes blink {
+    0%, 50% {
         opacity: 1;
-        transform: translateY(0);
     }
-    90% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    100% {
+    51%, 100% {
         opacity: 0;
-        transform: translateY(-20px);
     }
 }
 
