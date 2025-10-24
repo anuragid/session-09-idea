@@ -185,6 +185,7 @@ strong {
     min-height: 1.8em;
     text-align: left;
     margin-top: var(--spacing-sm);
+    transition: opacity 0.2s ease-in-out;
 }
 
 @media (max-width: 768px) {

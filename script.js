@@ -117,12 +117,17 @@ const cyclingTextAnimation = () => {
         } else {
             // Finished typing current phrase, pause then move to next
             setTimeout(() => {
-                // Clear the text and move to next phrase
-                typewriterElement.textContent = '';
-                currentCharIndex = 0;
-                currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
-                // Start typing the next phrase
-                setTimeout(typePhrase, pauseBeforeNext);
+                // Fade out transition
+                typewriterElement.style.opacity = '0';
+                setTimeout(() => {
+                    // Clear the text and move to next phrase
+                    typewriterElement.textContent = '';
+                    currentCharIndex = 0;
+                    currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+                    // Fade back in and start typing the next phrase
+                    typewriterElement.style.opacity = '1';
+                    setTimeout(typePhrase, pauseBeforeNext);
+                }, 200);
             }, pauseAfterTyping);
         }
     };
@@ -130,9 +135,6 @@ const cyclingTextAnimation = () => {
     // Start typing the first phrase
     typePhrase();
 };
-
-// Start the cycling text after the hero animations
-setTimeout(cyclingTextAnimation, 2000);
 
 // ==========================================
 // PARALLAX SCROLL EFFECT
@@ -349,8 +351,12 @@ const createASCIIBackground = () => {
 document.addEventListener('DOMContentLoaded', () => {
     // Core animations
     initLogo();
-    cyclingTextAnimation();
     parallaxScroll();
+    
+    // Start cycling text after a delay
+    setTimeout(() => {
+        cyclingTextAnimation();
+    }, 1500);
     
     // Enhancement features
     createCustomCursor();
