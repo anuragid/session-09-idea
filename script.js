@@ -113,58 +113,33 @@ const cyclingTextAnimation = () => {
     
     let currentPhraseIndex = 0;
     let currentCharIndex = 0;
-    let isDeleting = false;
-    let isPaused = false;
     
-    const typeSpeed = 80;  // Speed of typing
-    const deleteSpeed = 50;  // Speed of deleting
-    const pauseDuration = 2000;  // Pause at end of phrase
-    const pauseBeforeDelete = 1500;  // Pause before starting to delete
+    const typeSpeed = 80;  // Speed of typing each character
+    const pauseAfterTyping = 2500;  // Pause after finishing typing phrase
     
-    const type = () => {
+    const typePhrase = () => {
         const currentPhrase = phrases[currentPhraseIndex];
         
-        if (isPaused) {
-            return;
-        }
-        
-        if (!isDeleting) {
-            // Typing
+        if (currentCharIndex < currentPhrase.length) {
+            // Continue typing the current phrase
             typewriterElement.textContent = currentPhrase.substring(0, currentCharIndex + 1);
             currentCharIndex++;
-            
-            if (currentCharIndex === currentPhrase.length) {
-                // Finished typing, pause before deleting
-                isPaused = true;
-                setTimeout(() => {
-                    isPaused = false;
-                    isDeleting = true;
-                    type();
-                }, pauseBeforeDelete);
-                return;
-            }
+            setTimeout(typePhrase, typeSpeed);
         } else {
-            // Deleting
-            typewriterElement.textContent = currentPhrase.substring(0, currentCharIndex - 1);
-            currentCharIndex--;
-            
-            if (currentCharIndex === 0) {
-                // Finished deleting
-                isDeleting = false;
+            // Finished typing current phrase, pause then move to next
+            setTimeout(() => {
+                // Clear the text and move to next phrase
+                typewriterElement.textContent = '';
+                currentCharIndex = 0;
                 currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
-                
-                // Small pause before typing next phrase
-                setTimeout(type, 500);
-                return;
-            }
+                // Start typing the next phrase
+                setTimeout(typePhrase, 300);
+            }, pauseAfterTyping);
         }
-        
-        // Continue typing or deleting
-        setTimeout(type, isDeleting ? deleteSpeed : typeSpeed);
     };
     
-    // Start typing after initial display
-    type();
+    // Start typing the first phrase
+    typePhrase();
 };
 
 // Start the cycling text after the hero animations
