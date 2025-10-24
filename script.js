@@ -99,6 +99,42 @@ const typewriterEffect = () => {
 };
 
 // ==========================================
+// CYCLING TEXT ANIMATION
+// ==========================================
+const cyclingTextAnimation = () => {
+    const cyclingElement = document.getElementById('cyclingText');
+    if (!cyclingElement) return;
+    
+    const statements = [
+        'Design is about connecting complexity to meaning',
+        'Design is about pushing boundaries',
+        'Design is about driving outcomes'
+    ];
+    
+    let currentIndex = 0;
+    
+    const cycleText = () => {
+        const textLine = cyclingElement.querySelector('.text-line');
+        
+        // Fade out
+        textLine.style.animation = 'none';
+        setTimeout(() => {
+            textLine.style.animation = 'textCycle 4s ease-in-out';
+        }, 10);
+        
+        // Change text
+        currentIndex = (currentIndex + 1) % statements.length;
+        textLine.textContent = statements[currentIndex];
+    };
+    
+    // Start cycling after initial display
+    setInterval(cycleText, 4000);
+};
+
+// Start the cycling text after the hero animations
+setTimeout(cyclingTextAnimation, 2000);
+
+// ==========================================
 // PARALLAX SCROLL EFFECT
 // ==========================================
 const parallaxScroll = () => {
@@ -313,6 +349,7 @@ const createASCIIBackground = () => {
 document.addEventListener('DOMContentLoaded', () => {
     // Core animations
     typewriterEffect();
+    cyclingTextAnimation();
     parallaxScroll();
     
     // Enhancement features

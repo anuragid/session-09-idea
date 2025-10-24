@@ -11,6 +11,8 @@
     --color-border: #222222;
     
     --font-mono: 'Courier New', Courier, monospace;
+    --font-pixel: 'Press Start 2P', cursive;
+    --font-retro: 'VT323', monospace;
     --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     
     --spacing-xs: 0.5rem;
@@ -140,16 +142,52 @@ strong {
     text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
 }
 
-.hero-text h1 {
-    margin-bottom: var(--spacing-sm);
-    opacity: 0;
-}
-
-.hero-text .subtitle {
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
+.hero-text .greeting {
+    font-size: clamp(1rem, 2vw, 1.25rem);
     color: var(--color-text-muted);
     font-weight: 300;
     opacity: 0;
+    margin-bottom: var(--spacing-md);
+    letter-spacing: 0.05em;
+}
+
+.hero-text .cycling-text {
+    font-family: var(--font-pixel);
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    color: var(--color-accent);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-sm);
+    opacity: 0;
+    min-height: 3.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: none;
+    font-weight: 400;
+}
+
+.cycling-text .text-line {
+    display: inline-block;
+    animation: textCycle 1s ease-in-out;
+}
+
+@keyframes textCycle {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    90% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
 }
 
 .fade-in {
