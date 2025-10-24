@@ -267,7 +267,7 @@ const createASCIIBackground = () => {
         width: 100%;
         height: 100%;
         z-index: -1;
-        opacity: 0.03;
+        opacity: 0.08;
         pointer-events: none;
     `;
     document.body.appendChild(bgCanvas);
@@ -282,10 +282,10 @@ const createASCIIBackground = () => {
     const drops = Array(Math.floor(columns)).fill(1);
     
     const draw = () => {
-        ctx.fillStyle = 'rgba(10, 10, 10, 0.05)';
+        ctx.fillStyle = 'rgba(10, 10, 10, 0.04)';
         ctx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
         
-        ctx.fillStyle = '#00ff88';
+        ctx.fillStyle = 'rgba(0, 255, 136, 0.85)';
         ctx.font = fontSize + 'px monospace';
         
         for (let i = 0; i < drops.length; i++) {
