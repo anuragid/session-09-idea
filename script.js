@@ -101,27 +101,34 @@ const cyclingTextAnimation = () => {
     
     let currentPhraseIndex = 0;
     let currentCharIndex = 0;
+    let isTyping = false;
     
     const typeSpeed = 80;  // Speed of typing each character
     const pauseAfterTyping = 2500;  // Pause after finishing typing phrase
+    const pauseBeforeNext = 300;  // Pause before starting next phrase
     
     const typePhrase = () => {
+        // Prevent multiple instances running
+        if (isTyping && currentCharIndex > 0) return;
+        
         const currentPhrase = phrases[currentPhraseIndex];
         
         if (currentCharIndex < currentPhrase.length) {
+            isTyping = true;
             // Continue typing the current phrase
             typewriterElement.textContent = currentPhrase.substring(0, currentCharIndex + 1);
             currentCharIndex++;
             setTimeout(typePhrase, typeSpeed);
-        } else {
+        } else if (currentCharIndex === currentPhrase.length) {
             // Finished typing current phrase, pause then move to next
+            isTyping = false;
             setTimeout(() => {
                 // Clear the text and move to next phrase
                 typewriterElement.textContent = '';
                 currentCharIndex = 0;
                 currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
                 // Start typing the next phrase
-                setTimeout(typePhrase, 300);
+                setTimeout(typePhrase, pauseBeforeNext);
             }, pauseAfterTyping);
         }
     };

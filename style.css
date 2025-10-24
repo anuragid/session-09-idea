@@ -181,8 +181,16 @@ strong {
 
 .cycling-text .text-typewriter {
     display: inline-block;
-    min-width: 2ch;
+    min-width: 400px;
+    min-height: 1.8em;
+    text-align: left;
     margin-top: var(--spacing-sm);
+}
+
+@media (max-width: 768px) {
+    .cycling-text .text-typewriter {
+        min-width: 280px;
+    }
 }
 
 .cycling-text .cursor {
@@ -250,6 +258,9 @@ strong {
 .ascii-decoration {
     text-align: center;
     margin-bottom: var(--spacing-lg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .ascii-decoration pre,
@@ -259,6 +270,8 @@ strong {
     color: var(--color-accent);
     line-height: 1.2;
     display: inline-block;
+    margin: 0;
+    text-align: center;
 }
 
 .ascii-bracket {
